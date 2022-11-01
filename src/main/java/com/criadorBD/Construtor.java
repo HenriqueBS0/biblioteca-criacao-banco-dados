@@ -1,10 +1,9 @@
 package com.criadorBD;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 
+import com.criadorBD.gerenciadores.ConstrutorGerenciadorMysql;
 import com.criadorBD.gerenciadores.Gerenciador;
-import com.criadorBD.gerenciadores.GerenciadorMysql;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,9 +30,11 @@ public class Construtor {
     }
 
     private Gerenciador getGerenciador(String nome) {
-        HashMap<String, Gerenciador> gerenciadores = new HashMap<>();
-        gerenciadores.put("mysql", new GerenciadorMysql());
+        switch (nome) {
+            case "mysql":
+                return (new ConstrutorGerenciadorMysql()).construir();
+        }
 
-        return gerenciadores.get(nome);
+        return null;
     } 
 }
