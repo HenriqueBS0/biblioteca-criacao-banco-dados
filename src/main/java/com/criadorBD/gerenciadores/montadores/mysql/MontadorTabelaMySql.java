@@ -32,6 +32,21 @@ public class MontadorTabelaMySql implements IMontadorTabela {
         modelo = modelo.replace("{{coluna-nome}}", coluna.nome);
         modelo = modelo.replace("{{coluna-tipo}}", coluna.tipo);
 
-        return modelo;
+        StringBuilder colunaStringBuilder = new StringBuilder();
+
+        colunaStringBuilder.append(modelo);
+
+        if(coluna.chavePrimaria) {
+            colunaStringBuilder.append(" PRIMARY KEY");
+        }
+        else if(coluna.naoNula) {
+            colunaStringBuilder.append(" NOT NULL");
+        }
+
+        if(coluna.serial) {
+            colunaStringBuilder.append(" AUTO_INCREMENT");
+        }
+
+        return colunaStringBuilder.toString();
     }
 }
